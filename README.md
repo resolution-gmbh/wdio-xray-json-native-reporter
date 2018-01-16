@@ -8,12 +8,12 @@ This project was derived from the 'wdio-json-reporter' found [here](https://gith
 
 ## Installation
 
-The easiest way is to keep `wdio-xray-json-reporter` as a dependency in your `package.json`.
+The easiest way is to keep `wdio-xray-json-native-reporter` as a dependency in your `package.json`.
 
 ```json
 {
   "dependencies": {
-    "wdio-xray-json-reporter": "~0.0.1"
+    "wdio-xray-json-native-reporter": "~1.0.0"
   }
 }
 ```
@@ -21,21 +21,21 @@ The easiest way is to keep `wdio-xray-json-reporter` as a dependency in your `pa
 You can simply do it by:
 
 ```bash
-npm install wdio-xray-json-reporter --save
+npm install https://github.com/resolution-gmbh/wdio-xray-json-native-reporter.git --save
 ```
 
 Instructions on how to install `WebdriverIO` can be found [here](http://webdriver.io/guide/getstarted/install.html).
 
 ## Configuration
 
-Following code shows the default wdio test runner configuration. Just add `'xray-json'` as reporter
+Following code shows the default wdio test runner configuration. Just add `'xray-json-native'` as reporter
 to the array. To get some output during the test you can run the [WDIO Dot Reporter](https://github.com/webdriverio/wdio-dot-reporter) and the WDIO JSON Reporter at the same time:
 
 ```js
 // wdio.conf.js
 module.exports = {
   // ...
-  reporters: ['dot', 'xray-json'],
+  reporters: ['dot', 'xray-json-native'],
   reporterOptions: {
     outputDir: './'
   },
@@ -49,7 +49,7 @@ It's also possible to combine all the resulting jsons into one.
 // wdio.conf.js
 module.exports = {
   // ...
-  reporters: ['dot', 'xray-json'],
+  reporters: ['dot', 'xray-json-native'],
   reporterOptions: {
     outputDir: './',
     combined: true
@@ -65,7 +65,7 @@ Another option is to configure the resulting filename of the JSON, if combined i
 // wdio.conf.js
 module.exports = {
   // ...
-  reporters: ['dot', 'xray-json'],
+  reporters: ['dot', 'xray-json-native'],
   reporterOptions: {
     outputDir: './',
     filename: 'wdio-results'
@@ -74,12 +74,15 @@ module.exports = {
 };
 ```
 
-Xray and Jira specific information:
-The feature file names must match the following format to ensure the test ids match in the output match the ids in Jira.
+### Xray and Jira specific information:
+
+If you don't define a `test{,Set,Plan}Key`, the feature file names must match the following format to ensure the test ids match in the output match the ids in Jira.
 
 ```
 ABC-123.feature -> Maps to Jira test issue ABC-123
 ```
+
+If you do define one of these options, this is not a requirement.
 
 Xray and Jira specific options:
 
@@ -92,6 +95,22 @@ reporterOptions: {
     testPlanKey: 'ABC-XXX' // Jira test plan id
 }
 ```
+
+Instead of `testPlanKey`, you can also define `testKey` or `testSetKey` but never more than one of these.
+
+If you additionally define a couple of optionals about your Jira host running XRay, you can have it uploaded automatically:
+
+```js
+reporterOptions: {
+    testKey: 'ABC-XXX', // Jira test id
+    upload: true,
+    xrayHost: 'https://jira.example.com',
+    xrayUser: 'jiraUser', // This user must have issue creation permission on your XRay project
+    xrayPass: 'jiraUsersPassword' 
+}
+```
+
+When the upload is done, a link to the newly created test execution. Notice that for every browser, a separate execution issue will be generated. 
 
 ## Sample Output
 ```
