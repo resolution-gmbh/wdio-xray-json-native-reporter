@@ -1,6 +1,6 @@
 {
   "name": "wdio-xray-json-native-reporter",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A WebdriverIO plugin. Report results in xray json format.",
   "main": "lib/reporter.js",
   "scripts": {
