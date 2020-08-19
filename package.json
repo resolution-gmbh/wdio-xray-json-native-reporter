@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/resolution-gmbh/wdio-xray-json-native-reporter#readme",
   "dependencies": {
+    "chalk": "^4.1.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
     "sync-request": "^4.1.0",
